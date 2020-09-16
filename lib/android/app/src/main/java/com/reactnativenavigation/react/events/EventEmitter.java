@@ -84,9 +84,11 @@ public class EventEmitter {
         emit(ModalDismissed, event);
     }
 
-    public void emitScreenPoppedEvent(String componentId) {
+    public void emitScreenPoppedEvent(String componentId, String disappearingComponentName, String appearingComponentName) {
         WritableMap event = Arguments.createMap();
         event.putString("componentId", componentId);
+        event.putString("disappearingComponentName", disappearingComponentName);
+        event.putString("appearingComponentName", appearingComponentName);
         emit(ScreenPopped, event);
     }
 
