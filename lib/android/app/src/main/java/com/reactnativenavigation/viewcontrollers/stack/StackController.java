@@ -271,6 +271,8 @@ public class StackController extends ParentController<StackLayout> {
             getView().addView(appearingView, 0);
         }
         presenter.onChildWillAppear(this, appearing, disappearing);
+        appearing.onViewDidAppear();
+        eventEmitter.emitScreenPoppedEvent(disappearing.getId(), disappearing.getCurrentComponentName(), appearing.getCurrentComponentName());
         if (disappearingOptions.animations.pop.enabled.isTrueOrUndefined()) {
             animator.pop(
                     appearing,
@@ -284,10 +286,8 @@ public class StackController extends ParentController<StackLayout> {
     }
 
     private void finishPopping(ViewController appearing, ViewController disappearing, CommandListener listener) {
-        appearing.onViewDidAppear();
         disappearing.destroy();
         listener.onSuccess(disappearing.getId());
-        eventEmitter.emitScreenPoppedEvent(disappearing.getId());
     }
 
     public void popTo(ViewController viewController, Options mergeOptions, CommandListener listener) {
